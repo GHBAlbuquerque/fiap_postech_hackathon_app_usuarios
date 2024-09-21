@@ -1,7 +1,8 @@
 package com.fiap.hackathon.common.interfaces.usecase;
 
 import com.fiap.hackathon.common.exceptions.custom.AlreadyRegisteredException;
-import com.fiap.hackathon.common.exceptions.custom.EntityNotFoundException;
+import com.fiap.hackathon.common.exceptions.custom.CreateEntityException;
+import com.fiap.hackathon.common.exceptions.custom.EntitySearchException;
 import com.fiap.hackathon.common.exceptions.custom.IdentityProviderException;
 import com.fiap.hackathon.common.interfaces.gateways.AuthenticationGateway;
 import com.fiap.hackathon.common.interfaces.gateways.DoctorGateway;
@@ -13,11 +14,11 @@ import java.util.List;
 public interface DoctorUseCase {
 
     Doctor register(Doctor doctor, DoctorGateway doctorGateway, AuthenticationGateway authenticationGateway)
-            throws AlreadyRegisteredException, IdentityProviderException;
+            throws AlreadyRegisteredException, IdentityProviderException, EntitySearchException, CreateEntityException;
 
-    Doctor getDoctorById(Long id, DoctorGateway doctorGateway) throws EntityNotFoundException;
+    Doctor getDoctorById(String id, DoctorGateway doctorGateway) throws EntitySearchException;
 
-    Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway);
+    Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway) throws EntitySearchException, AlreadyRegisteredException;
 
-    List<Doctor> searchDoctorsBySpecialty(MedicalSpecialtyEnum type, Integer page, Integer size, DoctorGateway doctorGateway);
+    List<Doctor> searchDoctorsBySpecialty(MedicalSpecialtyEnum specialty, Integer page, Integer size, DoctorGateway doctorGateway) throws EntitySearchException;
 }

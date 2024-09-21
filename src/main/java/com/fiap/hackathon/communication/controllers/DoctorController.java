@@ -7,7 +7,8 @@ import com.fiap.hackathon.common.dto.response.GetDoctorResponse;
 import com.fiap.hackathon.common.dto.response.RegisterUserResponse;
 import com.fiap.hackathon.common.dto.response.SearchDoctorResponse;
 import com.fiap.hackathon.common.exceptions.custom.AlreadyRegisteredException;
-import com.fiap.hackathon.common.exceptions.custom.EntityNotFoundException;
+import com.fiap.hackathon.common.exceptions.custom.CreateEntityException;
+import com.fiap.hackathon.common.exceptions.custom.EntitySearchException;
 import com.fiap.hackathon.common.exceptions.custom.IdentityProviderException;
 import com.fiap.hackathon.common.exceptions.model.ExceptionDetails;
 import com.fiap.hackathon.common.interfaces.gateways.AuthenticationGateway;
@@ -49,7 +50,7 @@ public class DoctorController {
     @PostMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<RegisterUserResponse> registerDoctor(
             @RequestBody @Valid RegisterDoctorRequest request
-    ) throws AlreadyRegisteredException, IdentityProviderException {
+    ) throws AlreadyRegisteredException, IdentityProviderException, EntitySearchException, CreateEntityException {
 
         final var userReq = DoctorBuilder.fromRequestToDomain(request);
         final var user = useCase.register(userReq, gateway, authenticationGateway);
@@ -67,8 +68,8 @@ public class DoctorController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class)))
     })
     @GetMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<GetDoctorResponse> getDoctorById(@PathVariable Long id)
-            throws EntityNotFoundException {
+    public ResponseEntity<GetDoctorResponse> getDoctorById(@PathVariable String id)
+            throws EntitySearchException {
 
         final var user = useCase.getDoctorById(id, gateway);
         final var userResponse = DoctorBuilder.fromDomainToResponse(user);
@@ -87,7 +88,7 @@ public class DoctorController {
             @RequestParam(required = false) MedicalSpecialtyEnum type,
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer size
-    ) {
+    ) throws EntitySearchException {
         final var result = useCase.searchDoctorsBySpecialty(type, page, size, gateway);
 
         return ResponseEntity.ok(

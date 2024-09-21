@@ -1,7 +1,7 @@
 package com.fiap.hackathon.external.repository;
 
 import com.fiap.hackathon.common.exceptions.custom.CreateEntityException;
-import com.fiap.hackathon.common.exceptions.custom.EntityNotFoundException;
+import com.fiap.hackathon.common.exceptions.custom.EntitySearchException;
 import com.fiap.hackathon.common.interfaces.repositories.PatientRepository;
 import com.fiap.hackathon.core.entity.Patient;
 import org.apache.logging.log4j.LogManager;
@@ -58,7 +58,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     }
 
     @Override
-    public Patient getPatientById(String id) throws EntityNotFoundException {
+    public Patient getPatientById(String id) throws EntitySearchException {
         final var key = new HashMap<String, AttributeValue>();
         key.put("id", AttributeValue.builder().s(id).build());
 
@@ -76,12 +76,12 @@ public class PatientRepositoryImpl implements PatientRepository {
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, id, e.getMessage());
-            throw new EntityNotFoundException(USER_01_NOT_FOUND, e.getMessage());
+            throw new EntitySearchException(USER_01_NOT_FOUND, e.getMessage());
         }
     }
 
     @Override
-    public Patient getPatientByCpf(String cpf) throws EntityNotFoundException {
+    public Patient getPatientByCpf(String cpf) throws EntitySearchException {
         final var expressionAttributeValues = new HashMap<String, AttributeValue>();
         expressionAttributeValues.put(":val", AttributeValue.builder().s(cpf).build());
 
@@ -100,12 +100,12 @@ public class PatientRepositoryImpl implements PatientRepository {
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, cpf, e.getMessage());
-            throw new EntityNotFoundException(USER_01_NOT_FOUND, e.getMessage());
+            throw new EntitySearchException(USER_01_NOT_FOUND, e.getMessage());
         }
     }
 
     @Override
-    public Patient getPatientByEmail(String email) throws EntityNotFoundException {
+    public Patient getPatientByEmail(String email) throws EntitySearchException {
         final var expressionAttributeValues = new HashMap<String, AttributeValue>();
         expressionAttributeValues.put(":val", AttributeValue.builder().s(email).build());
 
@@ -124,7 +124,7 @@ public class PatientRepositoryImpl implements PatientRepository {
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, email, e.getMessage());
-            throw new EntityNotFoundException(USER_01_NOT_FOUND, e.getMessage());
+            throw new EntitySearchException(USER_01_NOT_FOUND, e.getMessage());
         }
     }
 

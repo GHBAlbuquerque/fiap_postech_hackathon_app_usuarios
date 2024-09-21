@@ -6,7 +6,8 @@ import com.fiap.hackathon.common.dto.request.RegisterPatientRequest;
 import com.fiap.hackathon.common.dto.response.GetPatientResponse;
 import com.fiap.hackathon.common.dto.response.RegisterUserResponse;
 import com.fiap.hackathon.common.exceptions.custom.AlreadyRegisteredException;
-import com.fiap.hackathon.common.exceptions.custom.EntityNotFoundException;
+import com.fiap.hackathon.common.exceptions.custom.CreateEntityException;
+import com.fiap.hackathon.common.exceptions.custom.EntitySearchException;
 import com.fiap.hackathon.common.exceptions.custom.IdentityProviderException;
 import com.fiap.hackathon.common.exceptions.model.ExceptionDetails;
 import com.fiap.hackathon.common.interfaces.gateways.AuthenticationGateway;
@@ -45,7 +46,7 @@ public class PatientController {
     @PostMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<RegisterUserResponse> registerPatient(
             @RequestBody @Valid RegisterPatientRequest request
-    ) throws AlreadyRegisteredException, IdentityProviderException {
+    ) throws AlreadyRegisteredException, IdentityProviderException, CreateEntityException {
 
         final var userReq = PatientBuilder.fromRequestToDomain(request);
         final var user = useCase.register(userReq, userGateway, authenticationGateway);
@@ -63,8 +64,8 @@ public class PatientController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class)))
     })
     @GetMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<GetPatientResponse> getPatientById(@PathVariable Long id)
-            throws EntityNotFoundException {
+    public ResponseEntity<GetPatientResponse> getPatientById(@PathVariable String id)
+            throws EntitySearchException {
 
         final var user = useCase.getPatientById(id, userGateway);
         final var userResponse = PatientBuilder.fromDomainToResponse(user);

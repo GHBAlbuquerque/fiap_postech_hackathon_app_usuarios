@@ -5,13 +5,13 @@ import com.fiap.hackathon.common.exceptions.model.CustomException;
 
 import java.util.List;
 
-public class EntityNotFoundException extends CustomException {
+public class EntitySearchException extends CustomException {
 
-    public EntityNotFoundException(ExceptionCodes code, String message) {
+    public EntitySearchException(ExceptionCodes code, String message) {
         super(code, message);
     }
 
-    public EntityNotFoundException(ExceptionCodes code, String message, List<CustomError> customErrors) {
+    public EntitySearchException(ExceptionCodes code, String message, List<CustomError> customErrors) {
         super(code, message, customErrors);
     }
 }

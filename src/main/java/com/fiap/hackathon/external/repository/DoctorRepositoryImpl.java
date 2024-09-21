@@ -1,8 +1,7 @@
 package com.fiap.hackathon.external.repository;
 
 import com.fiap.hackathon.common.exceptions.custom.CreateEntityException;
-import com.fiap.hackathon.common.exceptions.custom.EntityNotFoundException;
-import com.fiap.hackathon.common.interfaces.gateways.DoctorGateway;
+import com.fiap.hackathon.common.exceptions.custom.EntitySearchException;
 import com.fiap.hackathon.common.interfaces.repositories.DoctorRepository;
 import com.fiap.hackathon.core.entity.Doctor;
 import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
@@ -62,7 +61,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     }
 
     @Override
-    public Doctor getDoctorById(String id) throws EntityNotFoundException {
+    public Doctor getDoctorById(String id) throws EntitySearchException {
 
         final var key = new HashMap<String, AttributeValue>();
         key.put("id", AttributeValue.builder().s(id).build());
@@ -81,12 +80,12 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, id, e.getMessage());
-            throw new EntityNotFoundException(USER_01_NOT_FOUND, e.getMessage());
+            throw new EntitySearchException(USER_01_NOT_FOUND, e.getMessage());
         }
     }
 
     @Override
-    public Doctor getDoctorByCpf(String cpf) throws EntityNotFoundException {
+    public Doctor getDoctorByCpf(String cpf) throws EntitySearchException {
         final var expressionAttributeValues = new HashMap<String, AttributeValue>();
         expressionAttributeValues.put(":val", AttributeValue.builder().s(cpf).build());
 
@@ -105,12 +104,12 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, cpf, e.getMessage());
-            throw new EntityNotFoundException(USER_01_NOT_FOUND, e.getMessage());
+            throw new EntitySearchException(USER_01_NOT_FOUND, e.getMessage());
         }
     }
 
     @Override
-    public Doctor getDoctorByEmail(String email) throws EntityNotFoundException {
+    public Doctor getDoctorByEmail(String email) throws EntitySearchException {
         final var expressionAttributeValues = new HashMap<String, AttributeValue>();
         expressionAttributeValues.put(":val", AttributeValue.builder().s(email).build());
 
@@ -129,12 +128,12 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, email, e.getMessage());
-            throw new EntityNotFoundException(USER_01_NOT_FOUND, e.getMessage());
+            throw new EntitySearchException(USER_01_NOT_FOUND, e.getMessage());
         }
     }
 
     @Override
-    public List<Doctor> getActiveDoctorsBySpecialty(String medicalSpecialty, Boolean active) throws EntityNotFoundException {
+    public List<Doctor> getActiveDoctorsBySpecialty(String medicalSpecialty, Boolean active) throws EntitySearchException {
         final var expressionAttributeValues = new HashMap<String, AttributeValue>();
         expressionAttributeValues.put(":val", AttributeValue.builder().s(medicalSpecialty).build());
 
@@ -155,7 +154,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, medicalSpecialty, e.getMessage());
-            throw new EntityNotFoundException(USER_01_NOT_FOUND, e.getMessage());
+            throw new EntitySearchException(USER_01_NOT_FOUND, e.getMessage());
         }
     }
 

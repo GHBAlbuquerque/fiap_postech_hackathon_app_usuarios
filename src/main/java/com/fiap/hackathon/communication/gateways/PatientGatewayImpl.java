@@ -1,7 +1,7 @@
 package com.fiap.hackathon.communication.gateways;
 
 import com.fiap.hackathon.common.exceptions.custom.CreateEntityException;
-import com.fiap.hackathon.common.exceptions.custom.EntityNotFoundException;
+import com.fiap.hackathon.common.exceptions.custom.EntitySearchException;
 import com.fiap.hackathon.common.interfaces.gateways.PatientGateway;
 import com.fiap.hackathon.common.interfaces.repositories.PatientRepository;
 import com.fiap.hackathon.core.entity.Patient;
@@ -24,17 +24,17 @@ public class PatientGatewayImpl implements PatientGateway {
     }
 
     @Override
-    public Patient getPatientById(String id) throws EntityNotFoundException {
+    public Patient getPatientById(String id) throws EntitySearchException {
         return repository.getPatientById(id);
     }
 
     @Override
-    public Patient getPatientByCpf(String cpf) throws EntityNotFoundException {
+    public Patient getPatientByCpf(String cpf) throws EntitySearchException {
         return repository.getPatientByCpf(cpf);
     }
 
     @Override
-    public Patient getPatientByEmail(String email) throws EntityNotFoundException {
+    public Patient getPatientByEmail(String email) throws EntitySearchException {
         return repository.getPatientByEmail(email);
     }
 }
