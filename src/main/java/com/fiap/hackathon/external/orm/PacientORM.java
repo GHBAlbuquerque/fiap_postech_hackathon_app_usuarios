@@ -13,8 +13,8 @@
 //@Setter
 //@Accessors(chain = true)
 //@NoArgsConstructor
-//@DynamoDBTable(tableName = "Pacient")
-//public class PacientORM {
+//@DynamoDBTable(tableName = "Patient")
+//public class PatientORM {
 //
 //    private String id;
 //    private Boolean isActive;

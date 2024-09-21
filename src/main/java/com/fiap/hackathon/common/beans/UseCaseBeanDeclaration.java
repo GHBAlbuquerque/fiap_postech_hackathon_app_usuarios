@@ -1,9 +1,9 @@
 package com.fiap.hackathon.common.beans;
 
 import com.fiap.hackathon.common.interfaces.usecase.DoctorUseCase;
-import com.fiap.hackathon.common.interfaces.usecase.PacientUseCase;
+import com.fiap.hackathon.common.interfaces.usecase.PatientUseCase;
 import com.fiap.hackathon.core.usecase.DoctorUseCaseImpl;
-import com.fiap.hackathon.core.usecase.PacientUseCaseImpl;
+import com.fiap.hackathon.core.usecase.PatientUseCaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,8 +16,8 @@ public class UseCaseBeanDeclaration {
     }
 
     @Bean
-    public PacientUseCase pacientUseCase() {
-        return new PacientUseCaseImpl();
+    public PatientUseCase patientUseCase() {
+        return new PatientUseCaseImpl();
     }
 
 }

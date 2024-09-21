@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-public class GetPacientResponse {
+public class GetPatientResponse {
     private String id;
     private String name;
     private LocalDate birthday;

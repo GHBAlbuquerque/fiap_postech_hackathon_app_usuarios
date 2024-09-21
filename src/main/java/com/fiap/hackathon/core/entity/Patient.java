@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class Pacient extends User {
+public class Patient extends User {
 
     private String id;
     private Boolean isActive;
 
-    public Pacient(String name,
+    public Patient(String name,
                    LocalDate birthday,
                    String cpf,
                    String email,
@@ -30,7 +30,7 @@ public class Pacient extends User {
         this.isActive = isActive;
     }
 
-    public Pacient() {
+    public Patient() {
         super();
     }
 }
