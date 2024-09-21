@@ -11,7 +11,4 @@ public interface AuthenticationGateway {
 
     Boolean confirmSignUp(String userName,
                           String code) throws IdentityProviderException;
-
-    Boolean deleteUser(String username,
-                              String password) throws IdentityProviderException;
 }

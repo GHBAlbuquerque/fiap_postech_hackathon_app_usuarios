@@ -1,6 +1,5 @@
-package com.fiap.hackathon.external.orm;
+package com.fiap.hackathon.common.dto.response;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,21 +10,18 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Accessors(chain = true)
 @NoArgsConstructor
-@DynamoDBTable(tableName = "Doctor")
-public class DoctorORM {
-
+@Accessors(chain = true)
+public class GetDoctorResponse {
     private Long id;
-    private Boolean isActive;
     private String name;
     private LocalDate birthday;
     private String cpf;
     private String email;
-    private String password;
     private String contactNumber;
     private LocalDateTime creationTimestamp;
     private LocalDateTime updateTimestamp;
+    private Boolean isActive;
     private String crm;
     private String medicalSpecialty;
 }
