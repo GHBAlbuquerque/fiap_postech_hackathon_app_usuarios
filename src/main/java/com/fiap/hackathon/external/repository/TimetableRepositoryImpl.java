@@ -3,7 +3,6 @@ package com.fiap.hackathon.external.repository;
 import com.fiap.hackathon.common.exceptions.custom.CreateEntityException;
 import com.fiap.hackathon.common.exceptions.custom.EntitySearchException;
 import com.fiap.hackathon.common.interfaces.repositories.TimetableRepository;
-import com.fiap.hackathon.core.entity.Doctor;
 import com.fiap.hackathon.core.entity.DoctorTimetable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

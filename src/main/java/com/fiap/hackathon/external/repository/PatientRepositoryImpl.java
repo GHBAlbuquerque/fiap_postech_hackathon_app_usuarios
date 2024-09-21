@@ -97,7 +97,7 @@ public class PatientRepositoryImpl implements PatientRepository {
             final var result = dynamoDbClient.query(queryRequest);
             final var patients = result.items().stream().map(item -> convertItemToEntity(item)).toList();
 
-            if(patients.isEmpty()) return null;
+            if (patients.isEmpty()) return null;
 
             return patients.get(0);
 
@@ -124,7 +124,7 @@ public class PatientRepositoryImpl implements PatientRepository {
             final var result = dynamoDbClient.query(queryRequest);
             final var patients = result.items().stream().map(this::convertItemToEntity).toList();
 
-            if(patients.isEmpty()) return null;
+            if (patients.isEmpty()) return null;
 
             return patients.get(0);
 
