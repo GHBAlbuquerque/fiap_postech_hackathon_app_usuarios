@@ -140,7 +140,7 @@ public class DoctorGatewayImpl implements DoctorGateway {
         try {
             final var queryRequest = QueryRequest.builder()
                     .tableName(TABLE_NAME)
-                    .indexName(EMAIL_INDEX)
+                    .indexName(SPECIALTY_INDEX)
                     .keyConditionExpression(KEY_CONDITION_EXPRESSION)
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
