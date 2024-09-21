@@ -10,9 +10,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -25,7 +23,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     private static final String TABLE_NAME = "Patient";
     private static final String CPF_INDEX = "CpfIndex";
     private static final String EMAIL_INDEX = "EmailIndex";
-    private static final String ATTRIBUTES = "id,fullName,birthday,cpf,email,contactNumber,isActive";
+    private static final String ATTRIBUTES = "id,fullName,birthday,cpf,email,password,contactNumber,isActive";
 
     private final DynamoDbClient dynamoDbClient;
 

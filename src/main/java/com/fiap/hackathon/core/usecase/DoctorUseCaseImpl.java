@@ -6,10 +6,11 @@ import com.fiap.hackathon.common.exceptions.custom.EntitySearchException;
 import com.fiap.hackathon.common.exceptions.custom.ExceptionCodes;
 import com.fiap.hackathon.common.interfaces.gateways.AuthenticationGateway;
 import com.fiap.hackathon.common.interfaces.gateways.DoctorGateway;
+import com.fiap.hackathon.common.interfaces.gateways.TimetableGateway;
 import com.fiap.hackathon.common.interfaces.usecase.DoctorUseCase;
 import com.fiap.hackathon.core.entity.Doctor;
-import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
 import com.fiap.hackathon.core.entity.DoctorTimetable;
+import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,7 +38,7 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
 
             doctor.setIsActive(Boolean.TRUE);
 
-            logger.info("DOCTOR successful created...");
+            logger.info("DOCTOR successfully created.");
 
             return doctorGateway.save(doctor);
 
@@ -52,8 +53,20 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
     }
 
     @Override
-    public DoctorTimetable registerTimetable(String doctorId, DoctorTimetable timetable, DoctorGateway doctorGateway) {
-        return null;
+    public DoctorTimetable registerDoctorTimetable(DoctorTimetable timetable, TimetableGateway timetableGateway) throws CreateEntityException {
+        logger.info("Creating TIMETABLE for DOCTOR with id {}", timetable.getDoctorId());
+
+        try {
+            return timetableGateway.save(timetable);
+
+        } catch (Exception ex) {
+            logger.error("TIMETABLE creation failed.");
+
+            throw new CreateEntityException(
+                    ExceptionCodes.USER_10_TIMETABLE_CREATION,
+                    ex.getMessage()
+            );
+        }
     }
 
     @Override

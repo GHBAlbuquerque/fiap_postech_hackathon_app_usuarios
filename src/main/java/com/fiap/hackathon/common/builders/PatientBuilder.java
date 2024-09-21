@@ -4,8 +4,6 @@ import com.fiap.hackathon.common.dto.request.RegisterPatientRequest;
 import com.fiap.hackathon.common.dto.response.GetPatientResponse;
 import com.fiap.hackathon.core.entity.Patient;
 
-import java.time.LocalDateTime;
-
 public class PatientBuilder {
 
     public PatientBuilder() {

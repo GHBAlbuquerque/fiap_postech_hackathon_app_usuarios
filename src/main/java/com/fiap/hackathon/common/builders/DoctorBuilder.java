@@ -6,8 +6,6 @@ import com.fiap.hackathon.common.dto.response.SearchDoctorResponse;
 import com.fiap.hackathon.core.entity.Doctor;
 import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
 
-import java.time.LocalDateTime;
-
 public class DoctorBuilder {
 
     public DoctorBuilder() {
@@ -53,6 +51,4 @@ public class DoctorBuilder {
                 .setCrm(doctor.getCrm())
                 .setMedicalSpecialty(doctor.getMedicalSpecialty().name());
     }
-
-
 }

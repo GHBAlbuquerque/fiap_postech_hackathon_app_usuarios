@@ -16,6 +16,7 @@ import com.fiap.hackathon.common.exceptions.custom.IdentityProviderException;
 import com.fiap.hackathon.common.exceptions.model.ExceptionDetails;
 import com.fiap.hackathon.common.interfaces.gateways.AuthenticationGateway;
 import com.fiap.hackathon.common.interfaces.gateways.DoctorGateway;
+import com.fiap.hackathon.common.interfaces.gateways.TimetableGateway;
 import com.fiap.hackathon.common.interfaces.usecase.DoctorUseCase;
 import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,11 +37,13 @@ public class DoctorController {
 
     private final AuthenticationGateway authenticationGateway;
     private final DoctorGateway gateway;
+    private final TimetableGateway timetableGateway;
     private final DoctorUseCase useCase;
 
-    public DoctorController(AuthenticationGateway authenticationGateway, DoctorGateway userGateway, DoctorUseCase useCase) {
+    public DoctorController(AuthenticationGateway authenticationGateway, DoctorGateway userGateway, TimetableGateway timetableGateway, DoctorUseCase useCase) {
         this.authenticationGateway = authenticationGateway;
         this.gateway = userGateway;
+        this.timetableGateway = timetableGateway;
         this.useCase = useCase;
     }
 
@@ -74,10 +77,10 @@ public class DoctorController {
     public ResponseEntity<GetDoctorTimetableResponse> registerTimetable(
             @PathVariable String id,
             @RequestBody @Valid RegisterDoctorTimetableRequest request
-    ) {
+    ) throws CreateEntityException {
 
-        final var timetable = DoctorTimetableBuilder.fromRequestToDomain(request);
-        final var result = useCase.registerTimetable(id, timetable, gateway);
+        final var timetable = DoctorTimetableBuilder.fromRequestToDomain(id, request);
+        final var result = useCase.registerDoctorTimetable(timetable, timetableGateway);
         final var timetableId = result.getId();
 
         final var uri = URI.create(timetableId);
@@ -122,6 +125,22 @@ public class DoctorController {
                         DoctorBuilder::fromDomainToSearchResponse
                 ).collect(Collectors.toList())
         );
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class)))
+    })
+    @GetMapping(value = "/{id}/timetable", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<GetDoctorResponse> getTimetableByDoctorId(@PathVariable String id)
+            throws EntitySearchException {
+
+        final var user = useCase.getDoctorById(id, gateway);
+        final var userResponse = DoctorBuilder.fromDomainToResponse(user);
+
+        return ResponseEntity.ok(userResponse);
     }
 
 

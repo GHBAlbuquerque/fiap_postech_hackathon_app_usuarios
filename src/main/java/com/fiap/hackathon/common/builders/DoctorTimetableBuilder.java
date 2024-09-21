@@ -6,8 +6,16 @@ import com.fiap.hackathon.core.entity.DoctorTimetable;
 
 public class DoctorTimetableBuilder {
 
-    public static DoctorTimetable fromRequestToDomain(RegisterDoctorTimetableRequest request) {
-        return new DoctorTimetable();
+    public static DoctorTimetable fromRequestToDomain(String doctorId, RegisterDoctorTimetableRequest request) {
+        return new DoctorTimetable()
+                .setDoctorId(doctorId)
+                .setSunday(request.getSunday())
+                .setMonday(request.getMonday())
+                .setTuesday(request.getTuesday())
+                .setWednesday(request.getWednesday())
+                .setThursday(request.getThursday())
+                .setFriday(request.getFriday())
+                .setSaturday(request.getSaturday());
     }
 
     public static GetDoctorTimetableResponse fromDomainToResponse(DoctorTimetable doctorTimetable) {

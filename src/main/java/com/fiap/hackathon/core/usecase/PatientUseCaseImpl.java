@@ -26,7 +26,7 @@ public class PatientUseCaseImpl implements PatientUseCase {
 
             patient.setIsActive(Boolean.TRUE);
 
-            logger.info("PATIENT successful created...");
+            logger.info("PATIENT successfully created.");
 
             return patientGateway.save(patient);
 

@@ -11,8 +11,10 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import static com.fiap.hackathon.common.exceptions.custom.ExceptionCodes.USER_01_NOT_FOUND;
 import static com.fiap.hackathon.common.exceptions.custom.ExceptionCodes.USER_08_USER_CREATION;
@@ -24,7 +26,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     private static final String CPF_INDEX = "CpfIndex";
     private static final String EMAIL_INDEX = "EmailIndex";
     private static final String SPECIALTY_INDEX = "SpecialtyIndex";
-    private static final String ATTRIBUTES = "id,fullName,birthday,cpf,email,contactNumber,isActive,crm,medicalSpecialty";
+    private static final String ATTRIBUTES = "id,fullName,birthday,cpf,email,password,contactNumber,isActive,crm,medicalSpecialty";
 
     private final DynamoDbClient dynamoDbClient;
 
