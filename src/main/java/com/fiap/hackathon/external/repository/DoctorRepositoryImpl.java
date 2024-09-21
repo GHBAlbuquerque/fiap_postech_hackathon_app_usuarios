@@ -26,7 +26,6 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     private static final String CPF_INDEX = "CpfIndex";
     private static final String EMAIL_INDEX = "EmailIndex";
     private static final String SPECIALTY_INDEX = "SpecialtyIndex";
-    private static final String KEY_CONDITION_EXPRESSION = "partitionKey = :val";
 
     private final DynamoDbClient dynamoDbClient;
 
@@ -93,12 +92,14 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             final var queryRequest = QueryRequest.builder()
                     .tableName(TABLE_NAME)
                     .indexName(CPF_INDEX)
-                    .keyConditionExpression(KEY_CONDITION_EXPRESSION)
+                    .keyConditionExpression("cpf = :val")
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
             final var result = dynamoDbClient.query(queryRequest);
             final var doctors = result.items().stream().map(item -> convertItemToEntity(item)).toList();
+
+            if(doctors.isEmpty()) return null;
 
             return doctors.get(0);
 
@@ -117,12 +118,14 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             final var queryRequest = QueryRequest.builder()
                     .tableName(TABLE_NAME)
                     .indexName(EMAIL_INDEX)
-                    .keyConditionExpression(KEY_CONDITION_EXPRESSION)
+                    .keyConditionExpression("email = :val")
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
             final var result = dynamoDbClient.query(queryRequest);
             final var doctors = result.items().stream().map(this::convertItemToEntity).toList();
+
+            if(doctors.isEmpty()) return null;
 
             return doctors.get(0);
 
@@ -141,7 +144,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             final var queryRequest = QueryRequest.builder()
                     .tableName(TABLE_NAME)
                     .indexName(SPECIALTY_INDEX)
-                    .keyConditionExpression(KEY_CONDITION_EXPRESSION)
+                    .keyConditionExpression("medicalSpecialty = :val")
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 

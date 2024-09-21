@@ -17,7 +17,7 @@ public class PatientUseCaseImpl implements PatientUseCase {
         logger.info("Starting PATIENT creation...");
 
         try {
-            validateInformationInUse(patient.getCpf(), patient.getEmail(), patientGateway);
+            validateInformationInUse(patient.getEmail(), patient.getCpf(), patientGateway);
 
             authenticationGateway.createUserAuthentication(
                     patient.getCpf(),
@@ -52,10 +52,15 @@ public class PatientUseCaseImpl implements PatientUseCase {
         final var entityUsingEmail = patientGateway.getPatientByEmail(email);
         final var entityUsingCpf = patientGateway.getPatientByCpf(cpf);
 
+        logger.info("Validating information for entity creation...");
+
         if (entityUsingEmail != null || entityUsingCpf != null) {
+            final var message = String.format("Couldn't complete registration for user. Informations %s and %s may be already in use", email, cpf);
+            logger.error(message);
+
             throw new AlreadyRegisteredException(
                     ExceptionCodes.USER_02_ALREADY_REGISTERED,
-                    String.format("Couldn't complete registration for user. Informations %s and %s may be already in use", email, cpf)
+                    message
             );
         }
 

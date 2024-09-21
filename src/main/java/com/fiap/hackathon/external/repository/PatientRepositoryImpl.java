@@ -89,14 +89,16 @@ public class PatientRepositoryImpl implements PatientRepository {
             final var queryRequest = QueryRequest.builder()
                     .tableName(TABLE_NAME)
                     .indexName(CPF_INDEX)
-                    .keyConditionExpression(KEY_CONDITION_EXPRESSION)
+                    .keyConditionExpression("cpf = :val")
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
             final var result = dynamoDbClient.query(queryRequest);
-            final var doctors = result.items().stream().map(item -> convertItemToEntity(item)).toList();
+            final var patients = result.items().stream().map(item -> convertItemToEntity(item)).toList();
 
-            return doctors.get(0);
+            if(patients.isEmpty()) return null;
+
+            return patients.get(0);
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, cpf, e.getMessage());
@@ -113,14 +115,16 @@ public class PatientRepositoryImpl implements PatientRepository {
             final var queryRequest = QueryRequest.builder()
                     .tableName(TABLE_NAME)
                     .indexName(EMAIL_INDEX)
-                    .keyConditionExpression(KEY_CONDITION_EXPRESSION)
+                    .keyConditionExpression("email = :val")
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
             final var result = dynamoDbClient.query(queryRequest);
-            final var doctors = result.items().stream().map(this::convertItemToEntity).toList();
+            final var patients = result.items().stream().map(this::convertItemToEntity).toList();
 
-            return doctors.get(0);
+            if(patients.isEmpty()) return null;
+
+            return patients.get(0);
 
         } catch (Exception e) {
             logger.error(GET_ENTITY_ERROR, email, e.getMessage());

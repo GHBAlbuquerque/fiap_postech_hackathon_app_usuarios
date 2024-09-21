@@ -27,7 +27,7 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
         logger.info("Starting DOCTOR creation...");
 
         try {
-            validateInformationInUse(doctor.getCpf(), doctor.getEmail(), doctorGateway);
+            validateInformationInUse(doctor.getEmail(), doctor.getCpf(), doctorGateway);
 
             authenticationGateway.createUserAuthentication(
                     doctor.getCpf(),
@@ -59,14 +59,18 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
 
     @Override
     public Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway) throws EntitySearchException, AlreadyRegisteredException {
-
         final var entityUsingEmail = doctorGateway.getDoctorByEmail(email);
         final var entityUsingCpf = doctorGateway.getDoctorByCpf(cpf);
 
+        logger.info("Validating information for entity creation...");
+
         if (entityUsingEmail != null || entityUsingCpf != null) {
+            final var message = String.format("Couldn't complete registration for user. Informations %s and %s may be already in use", email, cpf);
+            logger.error(message);
+
             throw new AlreadyRegisteredException(
                     ExceptionCodes.USER_02_ALREADY_REGISTERED,
-                    String.format("Couldn't complete registration for user. Informations %s and %s may be already in use", email, cpf)
+                    message
             );
         }
 
