@@ -90,7 +90,7 @@ public class TimetableRepositoryImpl implements TimetableRepository {
 
         itemValues.put("id", AttributeValue.builder().s(UUID.randomUUID().toString()).build());
         itemValues.put("doctorId", AttributeValue.builder().s(doctorTimetable.getDoctorId()).build());
-        itemValues.put("sunday", AttributeValue.builder().ss(doctorTimetable.getSunday()).build());
+        //itemValues.put("sunday", AttributeValue.builder().ss(doctorTimetable.getSunday()).build());
         itemValues.put("monday", AttributeValue.builder().ss(doctorTimetable.getMonday().toString()).build());
         itemValues.put("tuesday", AttributeValue.builder().ss(doctorTimetable.getTuesday()).build());
         itemValues.put("wednesday", AttributeValue.builder().ss(doctorTimetable.getWednesday()).build());

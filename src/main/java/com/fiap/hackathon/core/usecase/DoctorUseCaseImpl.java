@@ -57,6 +57,8 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
         logger.info("Creating TIMETABLE for DOCTOR with id {}", timetable.getDoctorId());
 
         try {
+            timetable.isValid();
+
             return timetableGateway.save(timetable);
 
         } catch (Exception ex) {

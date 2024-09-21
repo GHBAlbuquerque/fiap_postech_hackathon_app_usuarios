@@ -1,7 +1,9 @@
 package com.fiap.hackathon.core.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public enum TimeSlotsEnum {
 
@@ -20,5 +22,14 @@ public enum TimeSlotsEnum {
 
     private String slot;
 
+    public static Boolean isValid(String receivedTimeSlot) {
+        for (var value : TimeSlotsEnum.values()) {
+            if (value.getSlot().equals(receivedTimeSlot)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }
