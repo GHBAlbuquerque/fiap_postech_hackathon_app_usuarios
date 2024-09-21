@@ -2,8 +2,11 @@ package com.fiap.hackathon.communication.controllers;
 
 
 import com.fiap.hackathon.common.builders.DoctorBuilder;
+import com.fiap.hackathon.common.builders.DoctorTimetableBuilder;
 import com.fiap.hackathon.common.dto.request.RegisterDoctorRequest;
+import com.fiap.hackathon.common.dto.request.RegisterDoctorTimetableRequest;
 import com.fiap.hackathon.common.dto.response.GetDoctorResponse;
+import com.fiap.hackathon.common.dto.response.GetDoctorTimetableResponse;
 import com.fiap.hackathon.common.dto.response.RegisterUserResponse;
 import com.fiap.hackathon.common.dto.response.SearchDoctorResponse;
 import com.fiap.hackathon.common.exceptions.custom.AlreadyRegisteredException;
@@ -62,6 +65,29 @@ public class DoctorController {
     }
 
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class)))
+    })
+    @PostMapping(value = "/{id}/timetable", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<GetDoctorTimetableResponse> registerTimetable(
+            @PathVariable String id,
+            @RequestBody @Valid RegisterDoctorTimetableRequest request
+    ) {
+
+        final var timetable = DoctorTimetableBuilder.fromRequestToDomain(request);
+        final var result = useCase.registerTimetable(id, timetable, gateway);
+        final var timetableId = result.getId();
+
+        final var uri = URI.create(timetableId);
+
+        return ResponseEntity
+                .created(uri)
+                .body(DoctorTimetableBuilder.fromDomainToResponse(result));
+    }
+
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
@@ -85,11 +111,11 @@ public class DoctorController {
     })
     @GetMapping(produces = "application/json"/*, consumes = "application/json"*/)
     public ResponseEntity<List<SearchDoctorResponse>> searchDoctorsBySpecialty(
-            @RequestParam(required = false) MedicalSpecialtyEnum type,
+            @RequestParam(required = false) MedicalSpecialtyEnum medicalSpecialty,
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer size
     ) throws EntitySearchException {
-        final var result = useCase.searchDoctorsBySpecialty(type, page, size, gateway);
+        final var result = useCase.searchDoctorsBySpecialty(medicalSpecialty, page, size, gateway);
 
         return ResponseEntity.ok(
                 result.stream().map(

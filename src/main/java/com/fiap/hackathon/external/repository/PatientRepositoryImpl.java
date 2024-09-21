@@ -12,7 +12,9 @@ import software.amazon.awssdk.services.dynamodb.model.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static com.fiap.hackathon.common.exceptions.custom.ExceptionCodes.USER_01_NOT_FOUND;
 import static com.fiap.hackathon.common.exceptions.custom.ExceptionCodes.USER_08_USER_CREATION;
@@ -23,7 +25,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     private static final String TABLE_NAME = "Patient";
     private static final String CPF_INDEX = "CpfIndex";
     private static final String EMAIL_INDEX = "EmailIndex";
-    private static final String KEY_CONDITION_EXPRESSION = "partitionKey = :val";
+    private static final String ATTRIBUTES = "id,fullName,birthday,cpf,email,contactNumber,isActive";
 
     private final DynamoDbClient dynamoDbClient;
 
@@ -44,7 +46,7 @@ public class PatientRepositoryImpl implements PatientRepository {
 
         try {
             final var response = dynamoDbClient.putItem(putItemRequest);
-            final var id = response.responseMetadata().requestId();
+            final var id = itemValues.get("id").s();
 
             logger.info(CREATE_ENTITY_SUCCESS, TABLE_NAME, id);
 
@@ -90,6 +92,7 @@ public class PatientRepositoryImpl implements PatientRepository {
                     .tableName(TABLE_NAME)
                     .indexName(CPF_INDEX)
                     .keyConditionExpression("cpf = :val")
+                    .projectionExpression(ATTRIBUTES)
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
@@ -116,6 +119,7 @@ public class PatientRepositoryImpl implements PatientRepository {
                     .tableName(TABLE_NAME)
                     .indexName(EMAIL_INDEX)
                     .keyConditionExpression("email = :val")
+                    .projectionExpression(ATTRIBUTES)
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
@@ -135,7 +139,8 @@ public class PatientRepositoryImpl implements PatientRepository {
     private HashMap<String, AttributeValue> convertEntityToItem(Patient patient) {
         final var itemValues = new HashMap<String, AttributeValue>();
 
-        itemValues.put("name", AttributeValue.builder().s(patient.getName()).build());
+        itemValues.put("id", AttributeValue.builder().s(UUID.randomUUID().toString()).build());
+        itemValues.put("fullName", AttributeValue.builder().s(patient.getName()).build());
         itemValues.put("birthday", AttributeValue.builder().s(patient.getBirthday().toString()).build());
         itemValues.put("cpf", AttributeValue.builder().s(patient.getCpf()).build());
         itemValues.put("email", AttributeValue.builder().s(patient.getEmail()).build());
@@ -148,7 +153,7 @@ public class PatientRepositoryImpl implements PatientRepository {
 
     private Patient convertItemToEntity(Map<String, AttributeValue> item) {
         return new Patient(
-                item.get("name").s(),
+                item.get("fullName").s(),
                 LocalDate.parse(item.get("birthday").s()),
                 item.get("cpf").s(),
                 item.get("email").s(),

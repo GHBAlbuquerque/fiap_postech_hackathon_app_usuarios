@@ -12,10 +12,7 @@ import software.amazon.awssdk.services.dynamodb.model.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.fiap.hackathon.common.exceptions.custom.ExceptionCodes.USER_01_NOT_FOUND;
 import static com.fiap.hackathon.common.exceptions.custom.ExceptionCodes.USER_08_USER_CREATION;
@@ -27,6 +24,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     private static final String CPF_INDEX = "CpfIndex";
     private static final String EMAIL_INDEX = "EmailIndex";
     private static final String SPECIALTY_INDEX = "SpecialtyIndex";
+    private static final String ATTRIBUTES = "id,fullName,birthday,cpf,email,contactNumber,isActive,crm,medicalSpecialty";
 
     private final DynamoDbClient dynamoDbClient;
 
@@ -47,7 +45,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
         try {
             final var response = dynamoDbClient.putItem(putItemRequest);
-            final var id = response.responseMetadata().requestId();
+            final var id = itemValues.get("id").s();
 
             logger.info(CREATE_ENTITY_SUCCESS, TABLE_NAME, id);
 
@@ -94,6 +92,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                     .tableName(TABLE_NAME)
                     .indexName(CPF_INDEX)
                     .keyConditionExpression("cpf = :val")
+                    .projectionExpression(ATTRIBUTES)
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
@@ -120,6 +119,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                     .tableName(TABLE_NAME)
                     .indexName(EMAIL_INDEX)
                     .keyConditionExpression("email = :val")
+                    .projectionExpression(ATTRIBUTES)
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
@@ -146,10 +146,13 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                     .tableName(TABLE_NAME)
                     .indexName(SPECIALTY_INDEX)
                     .keyConditionExpression("medicalSpecialty = :val")
+                    .projectionExpression(ATTRIBUTES)
                     .expressionAttributeValues(expressionAttributeValues)
                     .build();
 
             final var result = dynamoDbClient.query(queryRequest);
+
+            if(result.items().isEmpty()) return List.of();
 
             return result.items().stream()
                     .map(this::convertItemToEntity)
@@ -165,7 +168,8 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     private HashMap<String, AttributeValue> convertEntityToItem(Doctor doctor) {
         final var itemValues = new HashMap<String, AttributeValue>();
 
-        itemValues.put("name", AttributeValue.builder().s(doctor.getName()).build());
+        itemValues.put("id", AttributeValue.builder().s(UUID.randomUUID().toString()).build());
+        itemValues.put("fullName", AttributeValue.builder().s(doctor.getName()).build());
         itemValues.put("birthday", AttributeValue.builder().s(doctor.getBirthday().toString()).build());
         itemValues.put("cpf", AttributeValue.builder().s(doctor.getCpf()).build());
         itemValues.put("email", AttributeValue.builder().s(doctor.getEmail()).build());
@@ -180,7 +184,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
     private Doctor convertItemToEntity(Map<String, AttributeValue> item) {
         return new Doctor(
-                item.get("name").s(),
+                item.get("fullName").s(),
                 LocalDate.parse(item.get("birthday").s()),
                 item.get("cpf").s(),
                 item.get("email").s(),

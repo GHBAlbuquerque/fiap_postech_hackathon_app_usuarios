@@ -9,6 +9,7 @@ import com.fiap.hackathon.common.interfaces.gateways.DoctorGateway;
 import com.fiap.hackathon.common.interfaces.usecase.DoctorUseCase;
 import com.fiap.hackathon.core.entity.Doctor;
 import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
+import com.fiap.hackathon.core.entity.DoctorTimetable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,6 +52,11 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
     }
 
     @Override
+    public DoctorTimetable registerTimetable(String doctorId, DoctorTimetable timetable, DoctorGateway doctorGateway) {
+        return null;
+    }
+
+    @Override
     public Doctor getDoctorById(String id, DoctorGateway doctorGateway) throws EntitySearchException {
         logger.info("Getting doctor by id {}", id);
 
@@ -78,10 +84,10 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
     }
 
     @Override
-    public List<Doctor> searchDoctorsBySpecialty(MedicalSpecialtyEnum specialty, Integer page, Integer size, DoctorGateway doctorGateway)
+    public List<Doctor> searchDoctorsBySpecialty(MedicalSpecialtyEnum medicalSpecialty, Integer page, Integer size, DoctorGateway doctorGateway)
             throws EntitySearchException {
-        logger.info("Searching for doctors with medical specialty {}", specialty);
+        logger.info("Searching for doctors with medical specialty {}", medicalSpecialty);
 
-        return doctorGateway.getActiveDoctorsBySpecialty(specialty.name(), Boolean.TRUE);
+        return doctorGateway.getActiveDoctorsBySpecialty(medicalSpecialty.name(), Boolean.TRUE);
     }
 }
