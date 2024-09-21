@@ -9,18 +9,19 @@ import com.fiap.hackathon.communication.gateways.PacientGatewayImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 @Configuration
 public class GatewayBeanDeclaration {
 
     @Bean
-    public DoctorGateway doctorGateway() {
-        return new DoctorGatewayImpl();
+    public DoctorGateway doctorGateway(DynamoDbClient dynamoDbClient) {
+        return new DoctorGatewayImpl(dynamoDbClient);
     }
 
     @Bean
-    public PacientGateway pacientGateway() {
-        return new PacientGatewayImpl();
+    public PacientGateway pacientGateway(DynamoDbClient dynamoDbClient) {
+        return new PacientGatewayImpl(dynamoDbClient);
     }
 
     @Bean

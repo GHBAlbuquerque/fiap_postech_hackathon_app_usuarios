@@ -1,20 +1,21 @@
 package com.fiap.hackathon.common.interfaces.gateways;
 
 import com.fiap.hackathon.common.exceptions.custom.CreateEntityException;
+import com.fiap.hackathon.common.exceptions.custom.EntityNotFoundException;
 import com.fiap.hackathon.core.entity.Doctor;
 
 import java.util.List;
 
 public interface DoctorGateway {
 
-    Doctor saveDoctor(Doctor doctor) throws CreateEntityException;
+    Doctor save(Doctor doctor) throws CreateEntityException;
 
-    Doctor getDoctorById(Long id);
+    Doctor getDoctorById(String id) throws CreateEntityException, EntityNotFoundException;
 
-    Doctor getDoctorByCpf(String cpf);
+    Doctor getDoctorByCpf(String cpf) throws EntityNotFoundException;
 
-    Doctor getDoctorByEmail(String cpf);
+    Doctor getDoctorByEmail(String email) throws EntityNotFoundException;
 
-    List<Doctor> getActiveDoctorsBySpecialty(String medicalSpecialty, Boolean active);
+    List<Doctor> getActiveDoctorsBySpecialty(String medicalSpecialty, Boolean active) throws EntityNotFoundException;
 
 }

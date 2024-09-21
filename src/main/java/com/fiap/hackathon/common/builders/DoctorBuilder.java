@@ -5,7 +5,6 @@ import com.fiap.hackathon.common.dto.response.GetDoctorResponse;
 import com.fiap.hackathon.common.dto.response.SearchDoctorResponse;
 import com.fiap.hackathon.core.entity.Doctor;
 import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
-import com.fiap.hackathon.external.orm.DoctorORM;
 
 import java.time.LocalDateTime;
 
@@ -58,7 +57,7 @@ public class DoctorBuilder {
                 .setMedicalSpecialty(doctor.getMedicalSpecialty().name());
     }
 
-    public static Doctor fromOrmToDomain(DoctorORM orm) {
+    /*public static Doctor fromOrmToDomain(DoctorORM orm) {
         return new Doctor(
                 orm.getName(),
                 orm.getBirthday(),
@@ -91,5 +90,5 @@ public class DoctorBuilder {
                 .setIsActive(doctor.getIsActive())
                 .setCrm(doctor.getCrm())
                 .setMedicalSpecialty(doctor.getMedicalSpecialty().name());
-    }
+    }*/
 }

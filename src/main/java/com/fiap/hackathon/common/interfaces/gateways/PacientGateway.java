@@ -6,7 +6,7 @@ public interface PacientGateway {
 
     Pacient savePacient(Pacient pacient);
 
-    Pacient getPacientById(Long id);
+    Pacient getPacientById(String id);
 
     Pacient getPacientByCpf(String cpf);
 

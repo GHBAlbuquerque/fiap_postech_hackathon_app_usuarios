@@ -3,7 +3,6 @@ package com.fiap.hackathon.common.builders;
 import com.fiap.hackathon.common.dto.request.RegisterPacientRequest;
 import com.fiap.hackathon.common.dto.response.GetPacientResponse;
 import com.fiap.hackathon.core.entity.Pacient;
-import com.fiap.hackathon.external.orm.PacientORM;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +35,7 @@ public class PacientBuilder {
                 .setContactNumber(pacient.getContactNumber());
     }
 
-    public static Pacient fromOrmToDomain(PacientORM orm) {
+    /*public static Pacient fromOrmToDomain(PacientORM orm) {
         return new Pacient(
                 orm.getName(),
                 orm.getBirthday(),
@@ -63,5 +62,5 @@ public class PacientBuilder {
                 .setCreationTimestamp(pacient.getCreationTimestamp())
                 .setUpdateTimestamp(pacient.getUpdateTimestamp())
                 .setIsActive(pacient.getIsActive());
-    }
+    }*/
 }
