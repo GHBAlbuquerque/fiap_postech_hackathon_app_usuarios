@@ -54,10 +54,19 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
 
     @Override
     public DoctorTimetable registerDoctorTimetable(DoctorTimetable timetable, TimetableGateway timetableGateway) throws CreateEntityException {
-        logger.info("Creating TIMETABLE for DOCTOR with id {}", timetable.getDoctorId());
+        final var doctorId = timetable.getDoctorId();
+        logger.info("Creating TIMETABLE for DOCTOR with id {}", doctorId);
 
         try {
             timetable.isValid();
+
+            final var existingTimetable = getTimetableByDoctorId(doctorId, timetableGateway);
+            if(existingTimetable != null) {
+                throw new CreateEntityException(
+                        ExceptionCodes.USER_10_TIMETABLE_CREATION,
+                        "Timetable for this doctor id already exists."
+                );
+            }
 
             return timetableGateway.save(timetable);
 
