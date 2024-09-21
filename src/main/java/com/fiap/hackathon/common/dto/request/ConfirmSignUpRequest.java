@@ -12,8 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ConfirmSignUpRequest {
 
-    @NotBlank(message = "The cpf cannot be blank")
-    String cpf;
+    @NotBlank(message = "The e-mail cannot be blank")
+    String email;
 
     @NotBlank(message = "The code must be a not null")
     String code;

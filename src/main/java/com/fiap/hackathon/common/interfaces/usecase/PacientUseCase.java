@@ -14,7 +14,5 @@ public interface PacientUseCase {
 
     Pacient getPacientById(Long id, PacientGateway pacientGateway) throws EntityNotFoundException;
 
-    Boolean confirmPacientSignUp(String cpf, String code, AuthenticationGateway authenticationGateway) throws IdentityProviderException;
-
     Boolean validateInformationInUse(String email, String cpf, PacientGateway pacientGateway);
 }

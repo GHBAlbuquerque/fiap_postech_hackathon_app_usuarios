@@ -14,7 +14,5 @@ public interface DoctorUseCase {
 
     Doctor getDoctorById(Long id, DoctorGateway doctorGateway) throws EntityNotFoundException;
 
-    Boolean confirmDoctorSignUp(String cpf, String code, AuthenticationGateway authenticationGateway) throws IdentityProviderException;
-
     Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway);
 }
