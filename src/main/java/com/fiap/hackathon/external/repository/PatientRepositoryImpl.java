@@ -141,8 +141,6 @@ public class PatientRepositoryImpl implements PatientRepository {
         itemValues.put("email", AttributeValue.builder().s(patient.getEmail()).build());
         itemValues.put("password", AttributeValue.builder().s(patient.getPassword()).build());
         itemValues.put("contactNumber", AttributeValue.builder().s(patient.getContactNumber()).build());
-        itemValues.put("creationTimestamp", AttributeValue.builder().s(patient.getCreationTimestamp().toString()).build());
-        itemValues.put("updateTimestamp", AttributeValue.builder().s(patient.getUpdateTimestamp().toString()).build());
         itemValues.put("isActive", AttributeValue.builder().bool(patient.getIsActive()).build());
 
         return itemValues;
@@ -156,8 +154,6 @@ public class PatientRepositoryImpl implements PatientRepository {
                 item.get("email").s(),
                 item.get("password").s(),
                 item.get("contactNumber").s(),
-                LocalDateTime.parse(item.get("creationTimestamp").s()),
-                LocalDateTime.parse(item.get("updateTimestamp").s()),
                 item.get("id").s(),
                 item.get("isActive").bool()
         );

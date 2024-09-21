@@ -25,7 +25,6 @@ public class DoctorBuilder {
         doctor.setName(request.getName())
                 .setBirthday(request.getBirthday())
                 .setCpf(request.getCpf())
-                .setCreationTimestamp(LocalDateTime.now())
                 .setEmail(request.getEmail())
                 .setPassword(request.getPassword())
                 .setContactNumber(request.getContactNumber());
@@ -40,8 +39,6 @@ public class DoctorBuilder {
                 .setBirthday(doctor.getBirthday())
                 .setCpf(doctor.getCpf())
                 .setEmail(doctor.getEmail())
-                .setCreationTimestamp(doctor.getCreationTimestamp())
-                .setUpdateTimestamp(doctor.getUpdateTimestamp())
                 .setIsActive(doctor.getIsActive())
                 .setContactNumber(doctor.getContactNumber())
                 .setCrm(doctor.getCrm())
@@ -57,38 +54,5 @@ public class DoctorBuilder {
                 .setMedicalSpecialty(doctor.getMedicalSpecialty().name());
     }
 
-    /*public static Doctor fromOrmToDomain(DoctorORM orm) {
-        return new Doctor(
-                orm.getName(),
-                orm.getBirthday(),
-                orm.getCpf(),
-                orm.getEmail(),
-                orm.getPassword(),
-                orm.getContactNumber(),
-                orm.getCreationTimestamp(),
-                orm.getUpdateTimestamp(),
-                orm.getId(),
-                orm.getIsActive(),
-                orm.getCrm(),
-                MedicalSpecialtyEnum.valueOf(
-                        orm.getMedicalSpecialty()
-                )
-        );
-    }
 
-    public static DoctorORM fromDomainToOrm(Doctor doctor) {
-        return new DoctorORM()
-                .setId(doctor.getId())
-                .setName(doctor.getName())
-                .setBirthday(doctor.getBirthday())
-                .setCpf(doctor.getCpf())
-                .setEmail(doctor.getEmail())
-                .setPassword(doctor.getPassword())
-                .setContactNumber(doctor.getContactNumber())
-                .setCreationTimestamp(doctor.getCreationTimestamp())
-                .setUpdateTimestamp(doctor.getUpdateTimestamp())
-                .setIsActive(doctor.getIsActive())
-                .setCrm(doctor.getCrm())
-                .setMedicalSpecialty(doctor.getMedicalSpecialty().name());
-    }*/
 }

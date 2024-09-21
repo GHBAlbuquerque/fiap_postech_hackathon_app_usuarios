@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.fiap.hackathon.common.exceptions.custom.ExceptionCodes.USER_01_NOT_FOUND;
 import static com.fiap.hackathon.common.exceptions.custom.ExceptionCodes.USER_08_USER_CREATION;
@@ -170,10 +171,8 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         itemValues.put("email", AttributeValue.builder().s(doctor.getEmail()).build());
         itemValues.put("password", AttributeValue.builder().s(doctor.getPassword()).build());
         itemValues.put("contactNumber", AttributeValue.builder().s(doctor.getContactNumber()).build());
-        itemValues.put("creationTimestamp", AttributeValue.builder().s(doctor.getCreationTimestamp().toString()).build());
-        itemValues.put("updateTimestamp", AttributeValue.builder().s(doctor.getUpdateTimestamp().toString()).build());
         itemValues.put("crm", AttributeValue.builder().s(doctor.getCrm()).build());
-        itemValues.put("medicalSpecity", AttributeValue.builder().s(doctor.getMedicalSpecialty().name()).build());
+        itemValues.put("medicalSpecialty", AttributeValue.builder().s(doctor.getMedicalSpecialty().name()).build());
         itemValues.put("isActive", AttributeValue.builder().bool(doctor.getIsActive()).build());
 
         return itemValues;
@@ -187,12 +186,10 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                 item.get("email").s(),
                 item.get("password").s(),
                 item.get("contactNumber").s(),
-                LocalDateTime.parse(item.get("creationTimestamp").s()),
-                LocalDateTime.parse(item.get("updateTimestamp").s()),
                 item.get("id").s(),
                 item.get("isActive").bool(),
                 item.get("crm").s(),
-                MedicalSpecialtyEnum.valueOf(item.get("medicalSpecity").s())
+                MedicalSpecialtyEnum.valueOf(item.get("medicalSpecialty").s())
         );
     }
 }

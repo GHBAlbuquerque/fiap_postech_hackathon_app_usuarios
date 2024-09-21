@@ -19,8 +19,6 @@ public class GetDoctorResponse {
     private String cpf;
     private String email;
     private String contactNumber;
-    private LocalDateTime creationTimestamp;
-    private LocalDateTime updateTimestamp;
     private Boolean isActive;
     private String crm;
     private String medicalSpecialty;

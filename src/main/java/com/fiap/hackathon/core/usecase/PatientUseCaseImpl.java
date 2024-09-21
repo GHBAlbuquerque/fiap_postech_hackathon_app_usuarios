@@ -19,14 +19,14 @@ public class PatientUseCaseImpl implements PatientUseCase {
         try {
             validateInformationInUse(patient.getEmail(), patient.getCpf(), patientGateway);
 
-            authenticationGateway.createUserAuthentication(
+            /*authenticationGateway.createUserAuthentication(
                     patient.getCpf(),
                     patient.getPassword(),
-                    patient.getEmail());
+                    patient.getEmail());*/ //TODO
 
             patient.setIsActive(Boolean.TRUE);
 
-            logger.info("Starting PATIENT successful...");
+            logger.info("PATIENT successful created...");
 
             return patientGateway.save(patient);
 

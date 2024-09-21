@@ -16,7 +16,6 @@ public class PatientBuilder {
                 .setName(request.getName())
                 .setBirthday(request.getBirthday())
                 .setCpf(request.getCpf())
-                .setCreationTimestamp(LocalDateTime.now())
                 .setEmail(request.getEmail())
                 .setPassword(request.getPassword())
                 .setContactNumber(request.getContactNumber());
@@ -29,38 +28,7 @@ public class PatientBuilder {
                 .setBirthday(patient.getBirthday())
                 .setCpf(patient.getCpf())
                 .setEmail(patient.getEmail())
-                .setCreationTimestamp(patient.getCreationTimestamp())
-                .setUpdateTimestamp(patient.getUpdateTimestamp())
                 .setIsActive(patient.getIsActive())
                 .setContactNumber(patient.getContactNumber());
     }
-
-    /*public static Patient fromOrmToDomain(PatientORM orm) {
-        return new Patient(
-                orm.getName(),
-                orm.getBirthday(),
-                orm.getCpf(),
-                orm.getEmail(),
-                orm.getPassword(),
-                orm.getContactNumber(),
-                orm.getCreationTimestamp(),
-                orm.getUpdateTimestamp(),
-                orm.getId(),
-                orm.getIsActive()
-        );
-    }
-
-    public static PatientORM fromDomainToOrm(Patient patient) {
-        return new PatientORM()
-                .setId(patient.getId())
-                .setName(patient.getName())
-                .setBirthday(patient.getBirthday())
-                .setCpf(patient.getCpf())
-                .setEmail(patient.getEmail())
-                .setPassword(patient.getPassword())
-                .setContactNumber(patient.getContactNumber())
-                .setCreationTimestamp(patient.getCreationTimestamp())
-                .setUpdateTimestamp(patient.getUpdateTimestamp())
-                .setIsActive(patient.getIsActive());
-    }*/
 }

@@ -29,14 +29,14 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
         try {
             validateInformationInUse(doctor.getEmail(), doctor.getCpf(), doctorGateway);
 
-            authenticationGateway.createUserAuthentication(
+            /*authenticationGateway.createUserAuthentication(
                     doctor.getCpf(),
                     doctor.getPassword(),
-                    doctor.getEmail());
+                    doctor.getEmail());*/ //TODO
 
             doctor.setIsActive(Boolean.TRUE);
 
-            logger.info("Starting DOCTOR successful...");
+            logger.info("DOCTOR successful created...");
 
             return doctorGateway.save(doctor);
 

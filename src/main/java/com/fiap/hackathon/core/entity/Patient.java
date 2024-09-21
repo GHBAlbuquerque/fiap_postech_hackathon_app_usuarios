@@ -21,11 +21,9 @@ public class Patient extends User {
                    String email,
                    String password,
                    String contactNumber,
-                   LocalDateTime creationTimestamp,
-                   LocalDateTime updateTimestamp,
                    String id,
                    Boolean isActive) {
-        super(name, birthday, cpf, email, password, contactNumber, creationTimestamp, updateTimestamp);
+        super(name, birthday, cpf, email, password, contactNumber);
         this.id = id;
         this.isActive = isActive;
     }

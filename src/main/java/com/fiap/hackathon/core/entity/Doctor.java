@@ -23,13 +23,11 @@ public class Doctor extends User {
                   String email,
                   String password,
                   String contactNumber,
-                  LocalDateTime creationTimestamp,
-                  LocalDateTime updateTimestamp,
                   String id,
                   Boolean isActive,
                   String crm,
                   MedicalSpecialtyEnum specialty) {
-        super(name, birthday, cpf, email, password, contactNumber, creationTimestamp, updateTimestamp);
+        super(name, birthday, cpf, email, password, contactNumber);
         this.id = id;
         this.isActive = isActive;
         this.crm = crm;

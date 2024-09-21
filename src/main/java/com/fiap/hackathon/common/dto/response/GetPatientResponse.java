@@ -19,7 +19,5 @@ public class GetPatientResponse {
     private String cpf;
     private String email;
     private String contactNumber;
-    private LocalDateTime creationTimestamp;
-    private LocalDateTime updateTimestamp;
     private Boolean isActive;
 }
