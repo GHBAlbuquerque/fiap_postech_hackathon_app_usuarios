@@ -62,6 +62,6 @@ public class PacientBuilder {
                 .setContactNumber(pacient.getContactNumber())
                 .setCreationTimestamp(pacient.getCreationTimestamp())
                 .setUpdateTimestamp(pacient.getUpdateTimestamp())
-                .setIsActive(pacient.getIsActive())
+                .setIsActive(pacient.getIsActive());
     }
 }
