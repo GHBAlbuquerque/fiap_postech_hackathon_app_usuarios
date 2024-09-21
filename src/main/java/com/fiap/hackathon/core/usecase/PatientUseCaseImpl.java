@@ -55,7 +55,7 @@ public class PatientUseCaseImpl implements PatientUseCase {
         logger.info("Validating information for entity creation...");
 
         if (entityUsingEmail != null || entityUsingCpf != null) {
-            final var message = String.format("Couldn't complete registration for user. Informations %s and %s may be already in use", email, cpf);
+            final var message = String.format("Couldn't complete registration for user. Informations email '%s' and/or cpf '%s' may be already in use.", email, cpf);
             logger.error(message);
 
             throw new AlreadyRegisteredException(

@@ -100,10 +100,10 @@ public class DoctorController {
     public ResponseEntity<GetDoctorResponse> getDoctorById(@PathVariable String id)
             throws EntitySearchException {
 
-        final var user = useCase.getDoctorById(id, gateway);
-        final var userResponse = DoctorBuilder.fromDomainToResponse(user);
+        final var result = useCase.getDoctorById(id, gateway);
+        final var response = DoctorBuilder.fromDomainToResponse(result);
 
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok(response);
     }
 
     @ApiResponses(value = {
@@ -134,13 +134,12 @@ public class DoctorController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class)))
     })
     @GetMapping(value = "/{id}/timetable", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<GetDoctorResponse> getTimetableByDoctorId(@PathVariable String id)
+    public ResponseEntity<GetDoctorTimetableResponse> getTimetableByDoctorId(@PathVariable String id)
             throws EntitySearchException {
 
-        final var user = useCase.getDoctorById(id, gateway);
-        final var userResponse = DoctorBuilder.fromDomainToResponse(user);
+        final var result = useCase.getTimetableByDoctorId(id, timetableGateway);
 
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok(null);
     }
 
 

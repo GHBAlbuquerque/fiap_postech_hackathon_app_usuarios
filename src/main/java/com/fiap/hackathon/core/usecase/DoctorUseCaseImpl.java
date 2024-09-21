@@ -84,7 +84,7 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
         logger.info("Validating information for entity creation...");
 
         if (entityUsingEmail != null || entityUsingCpf != null) {
-            final var message = String.format("Couldn't complete registration for user. Informations %s and %s may be already in use", email, cpf);
+            final var message = String.format("Couldn't complete registration for user. Informations email '%s' and/or cpf '%s' may be already in use.", email, cpf);
             logger.error(message);
 
             throw new AlreadyRegisteredException(
@@ -102,5 +102,12 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
         logger.info("Searching for doctors with medical specialty {}", medicalSpecialty);
 
         return doctorGateway.getActiveDoctorsBySpecialty(medicalSpecialty.name(), Boolean.TRUE);
+    }
+
+    @Override
+    public DoctorTimetable getTimetableByDoctorId(String id, TimetableGateway timetableGateway) throws EntitySearchException {
+        logger.info("Searching for doctor {}'s timetable...", id);
+
+        return timetableGateway.getTimetableByDoctorId(id);
     }
 }

@@ -25,4 +25,6 @@ public interface DoctorUseCase {
     Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway) throws EntitySearchException, AlreadyRegisteredException;
 
     List<Doctor> searchDoctorsBySpecialty(MedicalSpecialtyEnum medicalSpecialty, Integer page, Integer size, DoctorGateway doctorGateway) throws EntitySearchException;
+
+    DoctorTimetable getTimetableByDoctorId(String id, TimetableGateway timetableGateway) throws EntitySearchException;
 }
