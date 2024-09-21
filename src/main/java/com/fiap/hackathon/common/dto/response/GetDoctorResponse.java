@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class GetDoctorResponse {
-    private Long id;
+    private String id;
     private String name;
     private LocalDate birthday;
     private String cpf;

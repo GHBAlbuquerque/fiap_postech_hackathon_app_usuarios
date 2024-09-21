@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @DynamoDBTable(tableName = "Pacient")
 public class PacientORM {
 
-    private Long id;
+    private String id;
     private Boolean isActive;
     private String name;
     private LocalDate birthday;

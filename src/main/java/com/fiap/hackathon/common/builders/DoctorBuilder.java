@@ -2,6 +2,7 @@ package com.fiap.hackathon.common.builders;
 
 import com.fiap.hackathon.common.dto.request.RegisterDoctorRequest;
 import com.fiap.hackathon.common.dto.response.GetDoctorResponse;
+import com.fiap.hackathon.common.dto.response.SearchDoctorResponse;
 import com.fiap.hackathon.core.entity.Doctor;
 import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
 import com.fiap.hackathon.external.orm.DoctorORM;
@@ -44,6 +45,15 @@ public class DoctorBuilder {
                 .setUpdateTimestamp(doctor.getUpdateTimestamp())
                 .setIsActive(doctor.getIsActive())
                 .setContactNumber(doctor.getContactNumber())
+                .setCrm(doctor.getCrm())
+                .setMedicalSpecialty(doctor.getMedicalSpecialty().name());
+    }
+
+    public static SearchDoctorResponse fromDomainToSearchResponse(Doctor doctor) {
+        return new SearchDoctorResponse()
+                .setId(doctor.getId())
+                .setName(doctor.getName())
+                .setEmail(doctor.getEmail())
                 .setCrm(doctor.getCrm())
                 .setMedicalSpecialty(doctor.getMedicalSpecialty().name());
     }

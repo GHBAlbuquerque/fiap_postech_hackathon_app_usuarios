@@ -13,5 +13,6 @@ public class SearchDoctorResponse {
     private String id;
     private String name;
     private String email;
-    private Boolean isActive;
+    private String crm;
+    private String medicalSpecialty;
 }

@@ -6,6 +6,9 @@ import com.fiap.hackathon.common.exceptions.custom.IdentityProviderException;
 import com.fiap.hackathon.common.interfaces.gateways.AuthenticationGateway;
 import com.fiap.hackathon.common.interfaces.gateways.DoctorGateway;
 import com.fiap.hackathon.core.entity.Doctor;
+import com.fiap.hackathon.core.entity.MedicalSpecialtyEnum;
+
+import java.util.List;
 
 public interface DoctorUseCase {
 
@@ -15,4 +18,6 @@ public interface DoctorUseCase {
     Doctor getDoctorById(Long id, DoctorGateway doctorGateway) throws EntityNotFoundException;
 
     Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway);
+
+    List<Doctor> searchDoctorsBySpecialty(MedicalSpecialtyEnum type, Integer page, Integer size, DoctorGateway doctorGateway);
 }

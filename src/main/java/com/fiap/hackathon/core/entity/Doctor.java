@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class Doctor extends User {
 
-    private Long id;
+    private String id;
     private Boolean isActive;
     private String crm;
     private MedicalSpecialtyEnum medicalSpecialty;
@@ -25,7 +25,7 @@ public class Doctor extends User {
                   String contactNumber,
                   LocalDateTime creationTimestamp,
                   LocalDateTime updateTimestamp,
-                  Long id,
+                  String id,
                   Boolean isActive,
                   String crm,
                   MedicalSpecialtyEnum specialty) {
