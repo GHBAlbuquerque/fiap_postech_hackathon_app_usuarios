@@ -96,6 +96,25 @@ public class DoctorController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class)))
     })
+    @PutMapping(value = "/{id}/timetable", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<GetDoctorTimetableResponse> updateTimetable(
+            @PathVariable String id,
+            @RequestBody @Valid RegisterDoctorTimetableRequest request
+    ) throws EntitySearchException, CreateEntityException {
+
+        final var timetable = DoctorTimetableBuilder.fromRequestToDomain(id, request);
+        final var result = useCase.updateDoctorTimetable(timetable, timetableGateway);
+
+        return ResponseEntity
+                .ok(DoctorTimetableBuilder.fromDomainToResponse(result));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionDetails.class)))
+    })
     @GetMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<GetDoctorResponse> getDoctorById(@PathVariable String id)
             throws EntitySearchException {

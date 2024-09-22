@@ -19,6 +19,8 @@ public class DoctorTimetableBuilder {
     }
 
     public static GetDoctorTimetableResponse fromDomainToResponse(DoctorTimetable doctorTimetable) {
+        if(doctorTimetable == null) return null;
+
         return new GetDoctorTimetableResponse()
                 .setSunday(doctorTimetable.getSunday())
                 .setMonday(doctorTimetable.getMonday())
