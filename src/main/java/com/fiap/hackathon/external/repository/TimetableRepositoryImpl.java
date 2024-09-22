@@ -13,6 +13,7 @@ import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.QueryRequest;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class TimetableRepositoryImpl implements TimetableRepository {
 
     private static final String TABLE_NAME = "Timetable";
     private static final String DOCTOR_ID_INDEX = "DoctorIdIndex";
-    private static final String ATTRIBUTES = "sunday,monday,tuesday,wednesday,thursday,friday,saturday";
+    private static final String ATTRIBUTES = "id,doctorId,sunday,monday,tuesday,wednesday,thursday,friday,saturday";
 
     private final DynamoDbClient dynamoDbClient;
 
@@ -44,7 +45,7 @@ public class TimetableRepositoryImpl implements TimetableRepository {
                 .build();
 
         try {
-            final var response = dynamoDbClient.putItem(putItemRequest);
+            dynamoDbClient.putItem(putItemRequest);
             final var id = itemValues.get("id").s();
 
             logger.info(CREATE_ENTITY_SUCCESS, TABLE_NAME, id);
@@ -73,9 +74,10 @@ public class TimetableRepositoryImpl implements TimetableRepository {
                     .build();
 
             final var result = dynamoDbClient.query(queryRequest);
-            final var timetables = result.items().stream().map(this::convertItemToEntity).toList();
 
-            if (timetables.isEmpty()) return null;
+            if (result.items().isEmpty()) return null;
+
+            final var timetables = result.items().stream().map(this::convertItemToEntity).toList();
 
             return timetables.get(0);
 
@@ -88,10 +90,15 @@ public class TimetableRepositoryImpl implements TimetableRepository {
     private HashMap<String, AttributeValue> convertEntityToItem(DoctorTimetable doctorTimetable) {
         final var itemValues = new HashMap<String, AttributeValue>();
 
-        itemValues.put("id", AttributeValue.builder().s(UUID.randomUUID().toString()).build());
+        if (doctorTimetable.getId() == null)
+            itemValues.put("id", AttributeValue.builder().s(UUID.randomUUID().toString()).build());
+
+        if (doctorTimetable.getId() != null)
+            itemValues.put("id", AttributeValue.builder().s(doctorTimetable.getId()).build());
+
         itemValues.put("doctorId", AttributeValue.builder().s(doctorTimetable.getDoctorId()).build());
-        //itemValues.put("sunday", AttributeValue.builder().ss(doctorTimetable.getSunday()).build());
-        itemValues.put("monday", AttributeValue.builder().ss(doctorTimetable.getMonday().toString()).build());
+        itemValues.put("sunday", AttributeValue.builder().ss(doctorTimetable.getSunday()).build());
+        itemValues.put("monday", AttributeValue.builder().ss(doctorTimetable.getMonday()).build());
         itemValues.put("tuesday", AttributeValue.builder().ss(doctorTimetable.getTuesday()).build());
         itemValues.put("wednesday", AttributeValue.builder().ss(doctorTimetable.getWednesday()).build());
         itemValues.put("thursday", AttributeValue.builder().ss(doctorTimetable.getThursday()).build());
@@ -105,13 +112,13 @@ public class TimetableRepositoryImpl implements TimetableRepository {
         return new DoctorTimetable(
                 item.get("id").s(),
                 item.get("doctorId").s(),
-                item.get("sunday").ss(),
-                item.get("monday").ss(),
-                item.get("tuesday").ss(),
-                item.get("wednesday").ss(),
-                item.get("thursday").ss(),
-                item.get("friday").ss(),
-                item.get("saturday").ss()
+                new HashSet<>(item.get("sunday").ss()),
+                new HashSet<>(item.get("monday").ss()),
+                new HashSet<>(item.get("tuesday").ss()),
+                new HashSet<>(item.get("wednesday").ss()),
+                new HashSet<>(item.get("thursday").ss()),
+                new HashSet<>(item.get("friday").ss()),
+                new HashSet<>(item.get("saturday").ss())
         );
     }
 }

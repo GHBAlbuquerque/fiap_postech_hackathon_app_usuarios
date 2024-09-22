@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,11 +13,11 @@ import java.util.List;
 @Accessors(chain = true)
 public class GetDoctorTimetableResponse {
 
-    private List<String> sunday;
-    private List<String> monday;
-    private List<String> tuesday;
-    private List<String> wednesday;
-    private List<String> thursday;
-    private List<String> friday;
-    private List<String> saturday;
+    private Set<String> sunday;
+    private Set<String> monday;
+    private Set<String> tuesday;
+    private Set<String> wednesday;
+    private Set<String> thursday;
+    private Set<String> friday;
+    private Set<String> saturday;
 }

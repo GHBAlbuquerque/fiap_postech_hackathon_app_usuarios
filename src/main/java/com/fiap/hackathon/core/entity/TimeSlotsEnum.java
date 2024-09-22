@@ -18,7 +18,8 @@ public enum TimeSlotsEnum {
     SLOT_15H_16H("15:00-16:00"),
     SLOT_16H_17H("16:00-17:00"),
     SLOT_17H_18H("17:00-18:00"),
-    SLOT_18H_19H("18:00-19:00");
+    SLOT_18H_19H("18:00-19:00"),
+    UNAVAILABLE("--:--");
 
     private String slot;
 

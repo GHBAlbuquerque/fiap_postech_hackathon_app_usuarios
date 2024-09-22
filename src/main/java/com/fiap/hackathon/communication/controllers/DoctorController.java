@@ -139,7 +139,7 @@ public class DoctorController {
 
         final var result = useCase.getTimetableByDoctorId(id, timetableGateway);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(DoctorTimetableBuilder.fromDomainToResponse(result));
     }
 
 

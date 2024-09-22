@@ -20,6 +20,8 @@ public interface DoctorUseCase {
 
     DoctorTimetable registerDoctorTimetable(DoctorTimetable timetable, TimetableGateway timetableGateway) throws CreateEntityException;
 
+    DoctorTimetable updateDoctorTimetable(DoctorTimetable timetable, TimetableGateway timetableGateway) throws EntitySearchException, CreateEntityException;
+
     Doctor getDoctorById(String id, DoctorGateway doctorGateway) throws EntitySearchException;
 
     Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway) throws EntitySearchException, AlreadyRegisteredException;

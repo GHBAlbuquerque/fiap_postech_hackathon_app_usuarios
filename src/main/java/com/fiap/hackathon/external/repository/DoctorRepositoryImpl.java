@@ -46,7 +46,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                 .build();
 
         try {
-            final var response = dynamoDbClient.putItem(putItemRequest);
+            dynamoDbClient.putItem(putItemRequest);
             final var id = itemValues.get("id").s();
 
             logger.info(CREATE_ENTITY_SUCCESS, TABLE_NAME, id);
@@ -74,7 +74,11 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         try {
             final var result = dynamoDbClient.getItem(getItemRequest);
 
-            logger.info(GET_ENTITY_SUCCESS, TABLE_NAME, id);
+            if (result.item().isEmpty()) {
+                throw new EntitySearchException(USER_01_NOT_FOUND, "No user was found with the requested id.");
+            }
+
+            logger.info(GET_ENTITY_SUCCESS, id, TABLE_NAME);
 
             return convertItemToEntity(result.item());
 
@@ -103,6 +107,8 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
             if (doctors.isEmpty()) return null;
 
+            logger.info(GET_ENTITY_SUCCESS, cpf, TABLE_NAME);
+
             return doctors.get(0);
 
         } catch (Exception e) {
@@ -129,6 +135,8 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             final var doctors = result.items().stream().map(this::convertItemToEntity).toList();
 
             if (doctors.isEmpty()) return null;
+
+            logger.info(GET_ENTITY_SUCCESS, email, TABLE_NAME);
 
             return doctors.get(0);
 

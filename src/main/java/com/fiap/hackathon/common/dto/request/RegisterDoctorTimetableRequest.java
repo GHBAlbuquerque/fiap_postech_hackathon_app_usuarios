@@ -4,29 +4,29 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 public class RegisterDoctorTimetableRequest {
 
     @NotNull
-    private List<String> sunday;
+    private Set<String> sunday;
 
     @NotNull
-    private List<String> monday;
+    private Set<String> monday;
 
     @NotNull
-    private List<String> tuesday;
+    private Set<String> tuesday;
 
     @NotNull
-    private List<String> wednesday;
+    private Set<String> wednesday;
 
     @NotEmpty
-    private List<String> thursday;
+    private Set<String> thursday;
 
     @NotNull
-    private List<String> friday;
+    private Set<String> friday;
 
     @NotNull
-    private List<String> saturday;
+    private Set<String> saturday;
 }

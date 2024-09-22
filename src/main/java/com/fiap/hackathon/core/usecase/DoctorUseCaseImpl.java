@@ -31,10 +31,7 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
         try {
             validateInformationInUse(doctor.getEmail(), doctor.getCpf(), doctorGateway);
 
-            /*authenticationGateway.createUserAuthentication(
-                    doctor.getCpf(),
-                    doctor.getPassword(),
-                    doctor.getEmail());*/ //TODO
+            /*authenticationGateway.createUserAuthentication(doctor.getEmail(), doctor.getPassword(), doctor.getEmail());*/ //TODO
 
             doctor.setIsActive(Boolean.TRUE);
 
@@ -61,10 +58,11 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
             timetable.isValid();
 
             final var existingTimetable = getTimetableByDoctorId(doctorId, timetableGateway);
-            if(existingTimetable != null) {
+
+            if (existingTimetable != null) {
                 throw new CreateEntityException(
                         ExceptionCodes.USER_10_TIMETABLE_CREATION,
-                        "Timetable for this doctor id already exists."
+                        "TIMETABLE for this doctorId already exists."
                 );
             }
 
@@ -81,14 +79,46 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
     }
 
     @Override
+    public DoctorTimetable updateDoctorTimetable(DoctorTimetable timetable, TimetableGateway timetableGateway) throws EntitySearchException {
+        final var doctorId = timetable.getDoctorId();
+        logger.info("Updating TIMETABLE for DOCTOR with id {}", doctorId);
+
+        try {
+            timetable.isValid();
+
+            final var existingTimetable = getTimetableByDoctorId(doctorId, timetableGateway);
+
+            if (existingTimetable == null) {
+                throw new EntitySearchException(
+                        ExceptionCodes.USER_13_TIMETABLE_MODIFICATION,
+                        "No TIMETABLE was found to be updated. Try creating a new one."
+                );
+            }
+
+            final var mergedTimetable = DoctorTimetable.mergeUpdates(existingTimetable, timetable);
+
+            return timetableGateway.save(mergedTimetable);
+
+        } catch (Exception ex) {
+            logger.error("TIMETABLE creation failed.");
+
+            throw new EntitySearchException(
+                    ExceptionCodes.USER_13_TIMETABLE_MODIFICATION,
+                    ex.getMessage()
+            );
+        }
+    }
+
+    @Override
     public Doctor getDoctorById(String id, DoctorGateway doctorGateway) throws EntitySearchException {
-        logger.info("Getting doctor by id {}", id);
+        logger.info("Getting doctor by id '{}'", id);
 
         return doctorGateway.getDoctorById(id);
     }
 
     @Override
-    public Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway) throws EntitySearchException, AlreadyRegisteredException {
+    public Boolean validateInformationInUse(String email, String cpf, DoctorGateway doctorGateway) throws
+            EntitySearchException, AlreadyRegisteredException {
         final var entityUsingEmail = doctorGateway.getDoctorByEmail(email);
         final var entityUsingCpf = doctorGateway.getDoctorByCpf(cpf);
 
@@ -108,7 +138,8 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
     }
 
     @Override
-    public List<Doctor> searchDoctorsBySpecialty(MedicalSpecialtyEnum medicalSpecialty, Integer page, Integer size, DoctorGateway doctorGateway)
+    public List<Doctor> searchDoctorsBySpecialty(MedicalSpecialtyEnum medicalSpecialty, Integer page, Integer
+            size, DoctorGateway doctorGateway)
             throws EntitySearchException {
         logger.info("Searching for doctors with medical specialty {}", medicalSpecialty);
 
@@ -116,9 +147,14 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
     }
 
     @Override
-    public DoctorTimetable getTimetableByDoctorId(String id, TimetableGateway timetableGateway) throws EntitySearchException {
+    public DoctorTimetable getTimetableByDoctorId(String id, TimetableGateway timetableGateway) throws
+            EntitySearchException {
         logger.info("Searching for doctor {}'s timetable...", id);
 
-        return timetableGateway.getTimetableByDoctorId(id);
+        final var timetable = timetableGateway.getTimetableByDoctorId(id);
+
+        logger.info("Timetable found.");
+
+        return timetable;
     }
 }

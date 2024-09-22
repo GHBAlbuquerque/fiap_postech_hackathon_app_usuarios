@@ -70,7 +70,11 @@ public class PatientRepositoryImpl implements PatientRepository {
         try {
             final var result = dynamoDbClient.getItem(getItemRequest);
 
-            logger.info(GET_ENTITY_SUCCESS, TABLE_NAME, id);
+            if (result.item().isEmpty()) {
+                throw new EntitySearchException(USER_01_NOT_FOUND, "No user was found with the requested id.");
+            }
+
+            logger.info(GET_ENTITY_SUCCESS, id, TABLE_NAME);
 
             return convertItemToEntity(result.item());
 
@@ -99,6 +103,8 @@ public class PatientRepositoryImpl implements PatientRepository {
 
             if (patients.isEmpty()) return null;
 
+            logger.info(GET_ENTITY_SUCCESS, cpf, TABLE_NAME);
+
             return patients.get(0);
 
         } catch (Exception e) {
@@ -125,6 +131,8 @@ public class PatientRepositoryImpl implements PatientRepository {
             final var patients = result.items().stream().map(this::convertItemToEntity).toList();
 
             if (patients.isEmpty()) return null;
+
+            logger.info(GET_ENTITY_SUCCESS, email, TABLE_NAME);
 
             return patients.get(0);
 
