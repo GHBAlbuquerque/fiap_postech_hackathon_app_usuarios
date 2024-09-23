@@ -40,7 +40,7 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
             return doctorGateway.save(doctor);
 
         } catch (Exception ex) {
-            logger.error("DOCTOR creation failed.");
+            logger.error("DOCTOR creation failed. Error: {}", ex.getMessage());
 
             throw new CreateEntityException(
                     ExceptionCodes.USER_08_USER_CREATION,

@@ -133,7 +133,7 @@ public class DoctorController {
     })
     @GetMapping(produces = "application/json"/*, consumes = "application/json"*/)
     public ResponseEntity<List<SearchDoctorResponse>> searchDoctorsBySpecialty(
-            @RequestParam(required = false) MedicalSpecialtyEnum medicalSpecialty,
+            @RequestParam() MedicalSpecialtyEnum medicalSpecialty,
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer size
     ) throws EntitySearchException {

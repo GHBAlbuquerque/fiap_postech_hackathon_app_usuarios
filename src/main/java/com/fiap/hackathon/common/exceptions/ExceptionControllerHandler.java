@@ -84,12 +84,12 @@ public class ExceptionControllerHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {UserDeactivationException.class})
-    public ResponseEntity<ExceptionDetails> resourceException(UserDeactivationException ex, WebRequest request) {
+    @ExceptionHandler(value = {TimetableSlotsException.class})
+    public ResponseEntity<ExceptionDetails> resourceException(TimetableSlotsException ex, WebRequest request) {
 
         final var message = new ExceptionDetails(
                 "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400",
-                "Error when trying to deactivate customer.",
+                "Couldn't create timetable. Try again with different values.",
                 ex.getCode().name(),
                 ex.getMessage(),
                 HttpStatus.BAD_REQUEST.value(),
