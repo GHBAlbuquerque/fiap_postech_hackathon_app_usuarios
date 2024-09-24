@@ -31,7 +31,7 @@ public class DoctorUseCaseImpl implements DoctorUseCase {
         try {
             validateInformationInUse(doctor.getEmail(), doctor.getCpf(), doctorGateway);
 
-            /*authenticationGateway.createUserAuthentication(doctor.getEmail(), doctor.getPassword(), doctor.getEmail());*/ //TODO
+            authenticationGateway.createUserAuthentication(doctor.getEmail(), doctor.getPassword(), doctor.getEmail());
 
             doctor.setIsActive(Boolean.TRUE);
 
