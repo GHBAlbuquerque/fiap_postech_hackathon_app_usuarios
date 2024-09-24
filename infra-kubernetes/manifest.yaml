@@ -26,7 +26,7 @@ spec:
               memory: "1Gi"
           env:
             - name: COGNITO_ID
-              value: "5knk8gad7neb3h7n91rpcigicu"
+              value: "6i132tjd63jrjpcl991kk0kue9"
             - name: ACCOUNT_ID
               value: "419623569149"
           ports:
