@@ -1,6 +1,5 @@
 package com.fiap.hackathon.communication.controllers;
 
-
 import com.fiap.hackathon.common.builders.DoctorBuilder;
 import com.fiap.hackathon.common.builders.DoctorTimetableBuilder;
 import com.fiap.hackathon.common.dto.request.RegisterDoctorRequest;
@@ -160,6 +159,4 @@ public class DoctorController {
 
         return ResponseEntity.ok(DoctorTimetableBuilder.fromDomainToResponse(result));
     }
-
-
 }

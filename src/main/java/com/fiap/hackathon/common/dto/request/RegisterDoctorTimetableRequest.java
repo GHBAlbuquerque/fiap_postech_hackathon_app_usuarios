@@ -2,11 +2,15 @@ package com.fiap.hackathon.common.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterDoctorTimetableRequest {
 
     @NotNull

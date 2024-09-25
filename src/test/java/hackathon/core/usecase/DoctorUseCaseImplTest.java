@@ -78,8 +78,7 @@ class DoctorUseCaseImplTest {
         when(timetableGateway.getTimetableByDoctorId(timetable.getDoctorId())).thenReturn(timetable);
 
         // Act & Assert
-        assertThrows(CreateEntityException.class, () ->
-                doctorUseCase.registerDoctorTimetable(timetable, timetableGateway));
+        assertThrows(CreateEntityException.class, () -> doctorUseCase.registerDoctorTimetable(timetable, timetableGateway));
     }
 
     @Test
@@ -101,13 +100,12 @@ class DoctorUseCaseImplTest {
     }
 
     @Test
-    void shouldFailWhenTimetableNotFound() throws EntitySearchException {
+    void shouldFailWhenTimetableNotFound() {
         // Arrange
         final var timetable = getDoctorTimetable();
 
         // Act & Assert
-        assertThrows(EntitySearchException.class, () ->
-                doctorUseCase.updateDoctorTimetable(timetable, timetableGateway));
+        assertThrows(EntitySearchException.class, () -> doctorUseCase.updateDoctorTimetable(timetable, timetableGateway));
     }
 
     @Test
@@ -151,8 +149,7 @@ class DoctorUseCaseImplTest {
         when(doctorGateway.getDoctorByEmail(email)).thenReturn(doctor);
 
         // Act & Assert
-        assertThrows(AlreadyRegisteredException.class, () ->
-                doctorUseCase.validateInformationInUse(email, cpf, doctorGateway));
+        assertThrows(AlreadyRegisteredException.class, () -> doctorUseCase.validateInformationInUse(email, cpf, doctorGateway));
     }
 
     @Test
@@ -166,8 +163,7 @@ class DoctorUseCaseImplTest {
         when(doctorGateway.getDoctorByCpf(cpf)).thenReturn(doctor);
 
         // Act & Assert
-        assertThrows(AlreadyRegisteredException.class, () ->
-                doctorUseCase.validateInformationInUse(email, cpf, doctorGateway));
+        assertThrows(AlreadyRegisteredException.class, () -> doctorUseCase.validateInformationInUse(email, cpf, doctorGateway));
     }
 
     @Test
@@ -210,12 +206,10 @@ class DoctorUseCaseImplTest {
         final var page = 0;
         final var size = 10;
 
-        when(doctorGateway.getActiveDoctorsBySpecialty(specialty.name(), Boolean.TRUE))
-                .thenThrow(new EntitySearchException(ExceptionCodes.USER_01_NOT_FOUND, "Error"));
+        when(doctorGateway.getActiveDoctorsBySpecialty(specialty.name(), Boolean.TRUE)).thenThrow(new EntitySearchException(ExceptionCodes.USER_01_NOT_FOUND, "Error"));
 
         // Act & Assert
-        assertThrows(EntitySearchException.class, () ->
-                doctorUseCase.searchDoctorsBySpecialty(specialty, page, size, doctorGateway));
+        assertThrows(EntitySearchException.class, () -> doctorUseCase.searchDoctorsBySpecialty(specialty, page, size, doctorGateway));
     }
 
     private static Doctor getDoctor() {
@@ -227,21 +221,7 @@ class DoctorUseCaseImplTest {
     }
 
     private static DoctorTimetable getDoctorTimetable() {
-        final var timetable = new DoctorTimetable(
-                "id",
-                "doctor123",
-                Set.of(),
-                Set.of("10:00-11:00"),
-                Set.of("10:00-11:00"),
-                Set.of("--:--"),
-                Set.of("11:00-12:00"),
-                Set.of("--:--"),
-                Set.of("10:00-11:00")
-        );
-
-        timetable.setDoctorId("doctor123");
-
-        return timetable;
+        return new DoctorTimetable("id", "doctor123", Set.of(), Set.of("10:00-11:00"), Set.of("10:00-11:00"), Set.of("--:--"), Set.of("11:00-12:00"), Set.of("--:--"), Set.of("10:00-11:00"));
     }
 
 }

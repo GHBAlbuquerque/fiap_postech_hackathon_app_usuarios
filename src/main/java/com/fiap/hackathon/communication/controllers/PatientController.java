@@ -1,6 +1,5 @@
 package com.fiap.hackathon.communication.controllers;
 
-
 import com.fiap.hackathon.common.builders.PatientBuilder;
 import com.fiap.hackathon.common.dto.request.RegisterPatientRequest;
 import com.fiap.hackathon.common.dto.response.GetPatientResponse;
@@ -72,6 +71,4 @@ public class PatientController {
 
         return ResponseEntity.ok(userResponse);
     }
-
-
 }
