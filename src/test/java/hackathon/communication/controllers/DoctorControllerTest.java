@@ -66,7 +66,7 @@ class DoctorControllerTest {
                 .when()
                 .put("/doctors/{id}/timetable", doctorId)
                 .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
@@ -93,7 +93,7 @@ class DoctorControllerTest {
                 .when()
                 .get("/doctors")
                 .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
 
