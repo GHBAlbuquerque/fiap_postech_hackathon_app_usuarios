@@ -20,4 +20,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "build/libs/fastfood-cliente-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "build/libs/fiap_postech_hackathon_app_usuarios-0.0.1-SNAPSHOT.jar"]
