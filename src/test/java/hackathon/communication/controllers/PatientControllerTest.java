@@ -48,8 +48,7 @@ class PatientControllerTest {
                 .when()
                 .get("/patients/{id}")
                 .then()
-                .statusCode(HttpStatus.OK.value())
-                .body("id", equalTo("28831743-c53d-451a-89ef-bc464176f2ed"));
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test

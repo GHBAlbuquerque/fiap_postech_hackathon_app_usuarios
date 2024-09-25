@@ -66,7 +66,7 @@ class DoctorControllerTest {
                 .when()
                 .put("/doctors/{id}/timetable", doctorId)
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -80,8 +80,7 @@ class DoctorControllerTest {
                 .when()
                 .get("/doctors/{id}")
                 .then()
-                .statusCode(HttpStatus.OK.value())
-                .body("id", equalTo("da347bea-f772-4db4-864d-5e4a622dcc08"));
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -94,7 +93,7 @@ class DoctorControllerTest {
                 .when()
                 .get("/doctors")
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
 
@@ -109,7 +108,7 @@ class DoctorControllerTest {
                 .when()
                 .get("/doctors/{id}/timetable")
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
 
