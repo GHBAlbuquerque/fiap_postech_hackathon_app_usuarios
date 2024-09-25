@@ -19,7 +19,10 @@ public class AWSDynamoBeanDeclaration {
 
     @Bean
     public DynamoDbClient dynamoDbClient() {
-        return DynamoDbClient.create();
+        return DynamoDbClient
+                .builder()
+                .region(Region.US_EAST_1)
+                .build();
     }
 
 }
