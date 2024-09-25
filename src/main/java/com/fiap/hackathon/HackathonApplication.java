@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
 @EnableAutoConfiguration
 @OpenAPIDefinition(info = @Info(title = "Hackathon PosTech FIAP - Usuarios", description = "Microsserviço de gerenciamento de Usuários (Médicos e Pacientes) realizado para o Hackathon da Pós-Graduação de Arquitetura de Sistemas da FIAP", version = "v1"))
