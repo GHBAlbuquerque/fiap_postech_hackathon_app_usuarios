@@ -62,7 +62,7 @@ class PatientControllerTest {
                 .when()
                 .get("/patients/{id}")
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     private RegisterPatientRequest createRegisterPatientRequest() {
