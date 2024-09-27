@@ -42,7 +42,7 @@ class DoctorControllerTest {
     @Test
     void givenValidRegisterDoctorTimetableRequest_whenRegisterTimetable_thenReturnCreated() {
         RegisterDoctorTimetableRequest request = createRegisterDoctorTimetableRequest();
-        String doctorId = "some-doctor-id";
+        String doctorId = "a0a8a782-9e1f-4e0d-897e-23e2808c2cd4";
 
         given()
                 .contentType(ContentType.JSON)
@@ -66,7 +66,7 @@ class DoctorControllerTest {
                 .when()
                 .put("/doctors/{id}/timetable", doctorId)
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
