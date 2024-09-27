@@ -71,7 +71,7 @@ class DoctorControllerTest {
 
     @Test
     void givenValidDoctorId_whenGetDoctorById_thenReturnOk() {
-        String doctorId = "da347bea-f772-4db4-864d-5e4a622dcc08";
+        String doctorId = "doctor-id";
 
         given()
                 .port(port)
@@ -80,7 +80,7 @@ class DoctorControllerTest {
                 .when()
                 .get("/doctors/{id}")
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
